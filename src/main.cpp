@@ -1,9 +1,11 @@
-#include <Arduino.h>
+#include "led_cube.h"
+
+LED_CUBE led_cube;
 
 void setup() {
-  // put your setup code here, to run once:
+    led_cube.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+    led_cube.process();
 }
