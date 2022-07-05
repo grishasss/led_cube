@@ -168,12 +168,6 @@ void WEB::wifi_init(){
     
 }
 
-// void WEB::log_change_status(bool f){
-//     if(f) Serial.println("log write");
-//     else Serial.println("log no write");
-//     Log->log_is_write = f;
-//     memory_write_bit(f , 0);
-// }
 
 
 
@@ -196,30 +190,31 @@ void WEB::reset_settings(){
     // assert(lenght);
     switch (payload[0]){
     case 0:
-        set_date(payload , lenght);
+        // set_date(payload , lenght);
         break;
     case 1:
-        send_file_name(client_num);
+        // send_file_name(client_num);
         break;
     case 2:
-        del_file(payload, lenght);
+        // del_file(payload, lenght);
         break;
     case 3:
         // kek
         break;
     case 4:
-        log_change_status(1);
+        // log_change_status(1);
         break;
     case 5:
-        log_change_status(0);
+        // log_change_status(0);
         break;
     case 6:
-        reset_settings();
+        // reset_settings();
+        break;
     case 7:
-        send_settings(client_num);
+        // send_settings(client_num);
         break;
     case 8:
-        send_data_sensors(client_num);
+        // send_data_sensors(client_num);
     default:
         // assert(0);
         break;
