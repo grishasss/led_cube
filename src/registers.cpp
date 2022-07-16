@@ -16,6 +16,10 @@ void REGISTERS::init(){
 }
 
 
+ inline void REGISTERS::change_led_status(uint8_t state,  uint8_t X ,uint8_t Y , uint8_t Z){
+    
+ }
+
 void REGISTERS::loop(){
     if(millis() - time_last_update > 1000){
         Serial.println("keke");

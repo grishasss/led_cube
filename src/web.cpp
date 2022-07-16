@@ -143,7 +143,8 @@ void WEB::wifi_init(){
     if(find_home){
         WiFi.mode(WIFI_STA);
         long start_time = millis();
-        while(!WiFi.begin(HOME_SSID , HOME_PASSWORD) && millis() - start_time < TIME_ON_CONNECT) {
+        WiFi.begin(HOME_SSID , HOME_PASSWORD);
+        while(WiFi.status() != WL_CONNECTED && millis() - start_time < TIME_ON_CONNECT) {
             delay(250);
             Serial.println("TRY");
             }
@@ -185,6 +186,26 @@ void WEB::reset_settings(){
 // }
 
 
+void WEB::reset(){
+    delay(500);
+    Serial.println("soft reset");
+    ESP.reset();
+}
+
+void WEB::reset_into_uart(){
+    delay(500);
+    Serial.println("soft reboot into uart mode");
+    ESP.rebootIntoUartDownloadMode();
+}
+void WEB::change_pin_status(uint8_t* payload){
+    Serial.println("change pin status");
+    if(payload[1]){
+
+    }
+    
+    
+}
+
 
  void WEB::get_command(uint8_t client_num , uint8_t * payload, size_t lenght){
     // assert(lenght);
@@ -214,7 +235,13 @@ void WEB::reset_settings(){
         // send_settings(client_num);
         break;
     case 8:
-        // send_data_sensors(client_num);
+        change_pin_status(payload);
+    case 9:
+        reset();
+        break;
+    case 10:
+        reset_into_uart();
+        break;
     default:
         // assert(0);
         break;

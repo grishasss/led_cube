@@ -50,10 +50,11 @@ public:
     void del_file(uint8_t * payload, size_t lenght);
     
     void set_date(uint8_t * payload, size_t lenght);
-    
+    void change_pin_status(uint8_t * payload);
     void reset_settings();// tmp no aviable)
     void send_settings(uint8_t client_num);// tmp no aviable)
-    void send_data_sensors(uint8_t client_num);// tmp no aviable)
     void start_ota();
+    void reset();
+    void reset_into_uart();
 };
 
