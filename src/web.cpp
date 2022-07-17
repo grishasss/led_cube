@@ -251,7 +251,10 @@ void WEB::change_pin_status(uint8_t* payload){
 
 
 void WEB::start_ota(){
-    ArduinoOTA.onStart([]() {
+    ArduinoOTA.onStart([&]() {
+        registors->ITimer.disableTimer();
+        Serial.println("OFF TIMER");
+        delay(101);
         String type;
         if (ArduinoOTA.getCommand() == U_FLASH)
             type = "sketch";

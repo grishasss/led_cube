@@ -8,6 +8,8 @@
 
 
 #include "memory.h"
+#include "registers.h"
+
 
 #include <WiFiUdp.h>
 #include <ESP8266WiFi.h>
@@ -33,7 +35,8 @@ public:
     
     ESP8266WebServer server;
     WebSocketsServer webSocket;
-  
+    REGISTERS *registors;
+    
 
     
     bool webSocket_it_connect;

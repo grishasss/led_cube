@@ -6,13 +6,13 @@ LED_CUBE::LED_CUBE(){
 
 }
 
-
 WEB web;
 REGISTERS registers;
 
 void LED_CUBE::begin(){
     Serial.begin(115200);
 
+    web.registors = (&registers);
 
     memory_init();
     web.wifi_init();
