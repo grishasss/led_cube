@@ -7,7 +7,35 @@ REGISTERS::REGISTERS(){
     
 }
 void IRAM_ATTR  REGISTERS::TimerHandler(){
+    static uint8_t layer = 0;
+    static uint8_t period = 0;
     
+
+    layer++;
+    if(layer == 4){
+        layer = 0;
+        period++;
+        period &= ((1 << 6) - 1);
+    }
+    
+    uint8_t tmp = 0;
+    switch(layer){
+    case 0:
+        tmp = 8;
+        break;
+    case 1:
+        tmp = 2;
+        break;
+    case 2:
+        tmp = 4;
+        break;
+    case 3:
+        tmp = 16;
+        break;
+    }
+
+
+
 }
 
 
