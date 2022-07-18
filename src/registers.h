@@ -31,8 +31,9 @@ public:
     bool state = 0;
 
     void change_led_status(uint8_t state,  uint8_t X ,uint8_t Y , uint8_t Z);
+    void set_all(uint8_t r , uint8_t g ,uint8_t b);
     
-    
+
     void init();
     void loop();
 
