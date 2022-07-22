@@ -7,6 +7,13 @@
 #define clock_pin 14
 #define latch_pin 12
 
+#define defualt_ineterval 600
+
+#define USING_TIM_DIV1                true           // for shortest and most accurate timer
+#define USING_TIM_DIV16               false           // for medium time and medium accurate timer
+#define USING_TIM_DIV256              false  
+
+
 class REGISTERS{
 
 public:
@@ -26,13 +33,13 @@ public:
         {{1*8+2, 1*8+1 , 2*8+7} , {2*8+6 , 2*8+5, 2*8+4} , {2*8+3, 2*8+2, 2*8+1} , {1*8+0 , 2*8+0 , 3*8+0}},
         {{0*8+7 , 0*8+6, 0*8+5} , {0*8+4 , 0*8+3, 0*8+2} , {0*8+1, 1*8+7, 1*8+6} , {1*8+5 , 1*8+4, 1*8+3}}
     }; 
+    const uint8_t gnd_pins[4] = {8, 2, 4, 16};
     uint8_t registers_state[7];
 
-    bool state = 0;
-
-    void change_led_status(uint8_t state,  uint8_t X ,uint8_t Y , uint8_t Z);
-    void set_all(uint8_t r , uint8_t g ,uint8_t b);
     
+    bool status = 1;
+    void change_status(bool mode); // 0 = off ; 1 = on 
+
 
     void init();
     void loop();

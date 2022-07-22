@@ -10,7 +10,7 @@ String getContentType(String filename){
   return "text/plain";
 }
 
- void WEB::send_file_name(uint8_t client_num){
+void WEB::send_file_name(uint8_t client_num){
     Serial.println("send_file_name");
     Dir dir = SPIFFS.openDir("/log");
     size_t sz = 2;
@@ -104,9 +104,10 @@ bool WEB::handleFileRead(String path) {
 }
 
 void WEB::query_file(){
+    registors->change_status(0);
     if (!handleFileRead(server.uri()))
         server.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
-
+    registors->change_status(1);
 }
 
 WEB::WEB() : server(80) , webSocket(81) {
@@ -252,9 +253,8 @@ void WEB::change_pin_status(uint8_t* payload){
 
 void WEB::start_ota(){
     ArduinoOTA.onStart([&]() {
-        registors->ITimer.disableTimer();
+        registors->change_status(0);
         Serial.println("OFF TIMER");
-        delay(101);
         String type;
         if (ArduinoOTA.getCommand() == U_FLASH)
             type = "sketch";
