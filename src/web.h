@@ -9,7 +9,7 @@
 
 #include "memory.h"
 #include "registers.h"
-
+#include "effects.h"
 
 #include <WiFiUdp.h>
 #include <ESP8266WiFi.h>
@@ -36,7 +36,7 @@ public:
     ESP8266WebServer server;
     WebSocketsServer webSocket;
     REGISTERS *registors;
-    
+    EFFECTS *effects;
 
     
     bool webSocket_it_connect;
@@ -49,7 +49,7 @@ public:
     void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
     void send_string(String data);
     void get_command(uint8_t client_num , uint8_t * payload, size_t lenght);
-    void send_file_name(uint8_t client_num);
+    void send_effect_name(uint8_t client_num);
     void del_file(uint8_t * payload, size_t lenght);
     
     void set_date(uint8_t * payload, size_t lenght);

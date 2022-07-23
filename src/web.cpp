@@ -10,50 +10,6 @@ String getContentType(String filename){
   return "text/plain";
 }
 
-void WEB::send_file_name(uint8_t client_num){
-    Serial.println("send_file_name");
-    Dir dir = SPIFFS.openDir("/log");
-    size_t sz = 2;
-    int8_t cnt_file = 0; 
-    while(dir.next()){
-        File tmpf = dir.openFile("r");
-        String tec = tmpf.fullName();
-        sz = sz + 3 + tec.length();
-        cnt_file++;
-    }
-
-    uint8_t data[sz];
-    data[0] = 0; 
-    data[1] = cnt_file;
-    int it = 2;
-    dir = SPIFFS.openDir("/log");
-    while(dir.next()){
-        File tmpf = dir.openFile("r");
-        String tec = tmpf.fullName();
-        
-        Serial.println(tmpf.size() >> 10);
-        data[it++] = tec.length();
-        data[it++] = (tmpf.size() >> 10) >> 8;
-        data[it++] = (tmpf.size() >> 10) & ((1 << 8) - 1);
-        
-
-        for(uint8_t x : tec){
-            data[it++] = x;
-        }
-    }
-    Serial.println("file cnt: " + String(cnt_file));
-    webSocket.sendBIN(client_num ,(const uint8_t *)data , sz);
-}
-
-
-void WEB::del_file(uint8_t * payload, size_t lenght){
-    String name;
-    for(uint8_t i = 0 ; i < payload[1] ;  i++){
-        name+=((char)payload[i + 2]);
-    }
-    Serial.println("delete file: " + name);
-    SPIFFS.remove(name);
-}
 
 
 
@@ -171,6 +127,30 @@ void WEB::wifi_init(){
 }
 
 
+ void WEB::send_effect_name(uint8_t client_num){
+    Serial.println("send_file_name");
+    
+    size_t sz = 2;
+    int8_t cnt_file = 0; 
+    for(uint8_t i = 0 ; i < effect_count;i++){
+        sz = sz + 1 + effects->effect_name[i].length();
+    }
+
+    uint8_t data[sz];
+    data[0] = 0; 
+    data[1] = effect_count;
+    int it = 2;
+
+    for(uint8_t i = 0 ; i < effect_count; i++){
+        data[it++] = effects->effect_name[i].length();
+        for(uint8_t x : effects->effect_name[i]){
+            data[it++] = x;
+        }
+    }
+    Serial.println("effect cnt: " + String(effect_count));
+    webSocket.sendBIN(client_num ,(const uint8_t *)data , sz);
+}
+
 
 
 void WEB::reset_settings(){
@@ -215,7 +195,7 @@ void WEB::change_pin_status(uint8_t* payload){
         // set_date(payload , lenght);
         break;
     case 1:
-        // send_file_name(client_num);
+        send_effect_name(client_num);
         break;
     case 2:
         // del_file(payload, lenght);

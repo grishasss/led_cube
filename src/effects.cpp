@@ -53,7 +53,7 @@ void EFFECTS::random_fill(){
     }
 
 
-    registers->LED[p[iter] & 3][(p[iter] >> 2) & 3][(p[iter] >> 4) & 3][0] = 255;
+    // registers->LED[p[iter] & 3][(p[iter] >> 2) & 3][(p[iter] >> 4) & 3][0] = 255;
     registers->LED[p[iter] & 3][(p[iter] >> 2) & 3][(p[iter] >> 4) & 3][1] = 255;
     (iter+=1)%=64;
 }
