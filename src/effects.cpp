@@ -17,6 +17,9 @@ void EFFECTS::loop(){
     case 0:
         random_fill();
         break;
+    case 1:
+        transfusion();
+        break;
     default:
         break;
     }
@@ -38,10 +41,8 @@ void EFFECTS::set_all(uint8_t r , uint8_t g ,uint8_t b){
 void EFFECTS::random_fill(){
     if(millis() - time_last_update < 60) return;
     time_last_update = millis();
-
     static uint8_t iter;
     static uint8_t p[64];
-    
     if(iter == 0){
         set_all(0 , 0 , 0);
         for(uint8_t i = 0; i < 64; i++) p[i] = i;
@@ -51,9 +52,44 @@ void EFFECTS::random_fill(){
             swap(p[a]  ,p[b]);
         }
     }
-
-
     // registers->LED[p[iter] & 3][(p[iter] >> 2) & 3][(p[iter] >> 4) & 3][0] = 255;
     registers->LED[p[iter] & 3][(p[iter] >> 2) & 3][(p[iter] >> 4) & 3][1] = 255;
     (iter+=1)%=64;
+}
+
+
+void EFFECTS::transfusion(){
+    if(millis() - time_last_update < 150) return;
+    time_last_update = millis();
+
+    static uint8_t iter;
+
+    static uint8_t R , G , B;
+    if(!iter) B = 7;
+    switch ( iter / 8){
+    case 0:
+        G++;
+        break;
+    case 1:
+        B--;
+        break;
+    case 2:
+        R++;
+        break;
+    case 3:
+        G--;
+        break;
+    case 4:
+        B++;
+        break;
+    case 5:
+        R--;
+        break;
+    default:
+        break;
+    }
+    set_all(R , G , B);
+
+
+    (iter+=1) %= 48;
 }
