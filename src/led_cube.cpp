@@ -2,7 +2,7 @@
 #include "web.h"
 #include "registers.h"
 #include "effects.h"
-
+#include "memory.h"
 
 LED_CUBE::LED_CUBE(){
 
@@ -17,7 +17,7 @@ void LED_CUBE::begin(){
 
     web.registors = (&registers);
     effects.registers = (&registers);
-    memory_init();
+    Memory::init();
     web.wifi_init();
     web.start_all_server();
 

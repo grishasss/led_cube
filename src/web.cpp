@@ -32,7 +32,7 @@ void WEB::webSocketEvent(uint8_t client_num, WStype_t type, uint8_t * payload, s
     switch (type){
         case WStype_CONNECTED:
             Serial.println("WebSocket is Connected");
-            webSocket_it_connect = true;
+            webSocketIsConnect = true;
             break;
         case WStype_DISCONNECTED:
             Serial.println("WebSocket is Disonnected");
@@ -66,7 +66,7 @@ void WEB::query_file(){
     registors->change_status(1);
 }
 
-WEB::WEB() : server(80) , webSocket(81) {
+WEB::WEB() : server(80) , webSocket(81), webSocketIsConnect(false) {
 
 }
 
@@ -258,4 +258,7 @@ void WEB::start_ota(){
         else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
     ArduinoOTA.begin();
+}
+bool WEB::getWebSocketIsConnect(){
+    return webSocketIsConnect;
 }

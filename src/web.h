@@ -30,16 +30,19 @@ const String AP_PASSWORD = "12345678";
 
 
 class WEB{
+private:
+    ESP8266WebServer server;
+    WebSocketsServer webSocket;
+    bool webSocketIsConnect;
 public:
     WEB();
     
-    ESP8266WebServer server;
-    WebSocketsServer webSocket;
+    
     REGISTERS *registors;
     EFFECTS *effects;
 
     
-    bool webSocket_it_connect;
+   
     void check_client();
     void start_all_server();
     void loop();
@@ -59,5 +62,6 @@ public:
     void start_ota();
     void reset();
     void reset_into_uart();
+    bool getWebSocketIsConnect();
 };
 
